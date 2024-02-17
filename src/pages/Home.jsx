@@ -7,8 +7,8 @@ function Home() {
   return (
     <>
       <div className="container m-auto">
-        <div className="container flex flex-col sm:flex-row justify-evenly p-2 mt-5 w-full">
-          <div className="w-1/2">
+        <div className="container flex flex-col items-center sm:flex-row justify-evenly p-2 mt-5 w-full">
+          <div className="w-2/3 md:w-1/2">
             <p className="text-4xl font-semibold p-2">
               Interactive live polling
             </p>
@@ -17,7 +17,7 @@ function Home() {
             </p>
 
             <Link to={'/login'}>
-              <button type="button" class="py-2 px-4 mt-5 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-fit transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+              <button type="button" className="py-2 px-4 mt-5 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-fit transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                 Create
               </button>
             </Link>
@@ -29,14 +29,14 @@ function Home() {
           </div>
         </div>
 
-        <div className="container my-3 bg-slate-100 p-4 rounded-lg">
-          <div className="w-1/2">
+        <div className="container my-3 bg-slate-100 p-4 rounded-lg md:items-start items-center justify-center flex flex-col">
+          <div className="w-2/3 md:w-1/2">
             <p className="text-4xl font-semibold p-2">
               Create polls in no time
             </p>
             <p className=" p-2">No matter how complex the questions or how numerous the options are, our polls are quick and easy to build. Responses from your audience will appear in real-time as dynamic visualizations.</p>
           </div>
-          <div className="flex sm:flex-row flex-col justify-evenly mt-2">
+          <div className="flex sm:flex-row flex-col justify-evenly mt-2 items-center gap-4 w-full">
             <div>
               <img src={icons.icon1} className="h-[10rem]" alt="icon" />
               <p className="font-semibold max-w-[10rem] text-center mt-1">

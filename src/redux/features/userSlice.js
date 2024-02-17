@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  // id from firestore
   userId: "",
   authToken: "",
   refreshToken: "",
@@ -11,11 +12,11 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     updateUser: (state, action) => {
-      state = {
-        userId: action.payload.userId,
-        authToken: action.payload.authToken,
-        refreshToken: action.payload.refreshToken,
-      };
+      console.log("action: ", action);
+      const { userId, authToken, refreshToken } = action.payload;
+      state.userId = userId;
+      state.authToken = authToken;
+      state.refreshToken = refreshToken;
     },
   },
 });

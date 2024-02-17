@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { firebaseSignIn, firebaseSignUp, showToast } from "../../helpers";
+import { firebaseSignIn, showToast, updateLocalStorage } from "../../helpers";
 import { updateUser } from "../../redux/features/userSlice";
 import { updateLoading } from "../../redux/features/loaderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import Loader from "../../components/Loader";
+import { firebaseAuth } from "../../firebase";
 
 function Login(props) {
-  const { firebaseApp, auth } = props;
   const navigate = useNavigate();
   const loading = useSelector((store) => store.loading.value);
   const dispatch = useDispatch();
@@ -30,16 +30,17 @@ function Login(props) {
   const handleSignin = async (e) => {
     e.preventDefault();
     dispatch(updateLoading(true));
-    firebaseSignIn(auth, data.email, data.password)
+    firebaseSignIn(firebaseAuth, data.email, data.password)
       .then((res) => {
-        console.log("response: ", res);
-        dispatch(
-          updateUser({
-            authToken: res.accessToken,
-            userId: res.uid,
-            refreshToken: res.refreshToken,
-          })
-        );
+        const userDetails = {
+          authToken: res.accessToken,
+          userId: res.uid,
+          refreshToken: res.refreshToken,
+        };
+
+        dispatch(updateUser(userDetails));
+        updateLocalStorage(userDetails);
+
         dispatch(updateLoading(false));
         showToast("Registered successfully.");
         navigate("/");

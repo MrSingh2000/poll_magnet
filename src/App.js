@@ -3,18 +3,18 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
+import { fetchFromLocalStorage } from "./helpers";
+import { useDispatch } from "react-redux";
+import { updateUser } from "./redux/features/userSlice";
 
 function App() {
-  // onAuthStateChanged(auth, (user) => {
-  //   if (user) {
-  //     const uid = user.uid;
-  //     console.log("uid: ", uid);
-  //     console.log("User changed");
-  //   } else {
-  //     // User is signed out
-  //     console.log("user is signed out");
-  //   }
-  // });
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const userDetails = fetchFromLocalStorage();
+    if (userDetails) dispatch(updateUser(userDetails));
+  }, []);
 
   return (
     <>

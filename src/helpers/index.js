@@ -1,7 +1,6 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
 } from "firebase/auth";
 import { toast } from "react-toastify";
 
@@ -73,4 +72,17 @@ export const showToast = (message, type = "success") => {
       toast.info(message);
       break;
   }
+};
+
+export const updateLocalStorage = (data) => {
+  localStorage.setItem("pollMagnetUser", JSON.stringify(data));
+};
+
+export const fetchFromLocalStorage = () => {
+  const userDetails = localStorage.getItem("pollMagnetUser");
+  return JSON.parse(userDetails);
+};
+
+export const clearLocalStorage = () => {
+  localStorage.removeItem("pollMagnetUser");
 };
