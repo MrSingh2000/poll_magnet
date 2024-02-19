@@ -86,3 +86,10 @@ export const fetchFromLocalStorage = () => {
 export const clearLocalStorage = () => {
   localStorage.removeItem("pollMagnetUser");
 };
+
+export const isAlreadyVoted = (poll, userId) => {
+  console.log("poll: ", poll.data.users);
+  const listOfVoters = poll.data.users;
+  if (!listOfVoters) return false;
+  return listOfVoters.includes(userId);
+};

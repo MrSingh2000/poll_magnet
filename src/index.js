@@ -11,6 +11,7 @@ import Polls from "./pages/Polls";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import Dashboard from "./pages/Dashboard";
+import CreatePolls from "./pages/CreatePolls";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
         path: "dashboard",
         element: <Dashboard />,
       },
+      {
+        path: 'createPoll',
+        element: <CreatePolls />
+      }
     ],
   },
   {

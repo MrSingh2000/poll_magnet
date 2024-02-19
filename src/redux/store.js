@@ -10,5 +10,5 @@ export const store = configureStore({
     counter: counterSlice,
     user: userSlice,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
