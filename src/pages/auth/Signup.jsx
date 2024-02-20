@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  firebaseSignUp,
-  showToast,
-  updateLocalStorage,
-} from "../../helpers";
+import { firebaseSignUp, showToast, updateLocalStorage } from "../../helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLoading } from "../../redux/features/loaderSlice";
 import Loader from "../../components/Loader";
@@ -35,32 +31,34 @@ function Signup(props) {
   const handleSignup = async (e) => {
     e.preventDefault();
     dispatch(updateLoading(true));
-    firebaseSignUp(firebaseAuth, data.email, data.password)
-      .then((res) => {
-        const userDetails = {
-          authToken: res.accessToken,
-          userId: res.uid,
-          refreshToken: res.refreshToken,
-        };
-
-        dispatch(updateUser(userDetails));
-        updateLocalStorage(userDetails);
-
-        firebaseAddUserInCollection({
-          email: res.email,
-          uid: res.uid,
-        });
-
-        dispatch(updateLoading(false));
-        showToast("Registered successfully.");
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log("error: ", err);
-        dispatch(updateLoading(false));
-        showToast(err.errorMessage, "error");
+  
+    try {
+      const res = await firebaseSignUp(firebaseAuth, data.email, data.password);
+      const userDetails = {
+        authToken: res.accessToken,
+        userId: res.uid,
+        refreshToken: res.refreshToken,
+        email: res.email,
+      };
+  
+      dispatch(updateUser(userDetails));
+      updateLocalStorage(userDetails);
+  
+      await firebaseAddUserInCollection({
+        email: res.email,
+        uid: res.uid,
       });
+  
+      showToast("Registered successfully.");
+      navigate("/");
+    } catch (err) {
+      console.log("error: ", err);
+      showToast(err.errorMessage, "error");
+    } finally {
+      dispatch(updateLoading(false));
+    }
   };
+  
 
   return loading ? (
     <Loader />

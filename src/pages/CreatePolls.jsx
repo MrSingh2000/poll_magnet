@@ -6,6 +6,7 @@ import { updateLoading } from "../redux/features/loaderSlice";
 import Loader from "../components/Loader";
 import { useNavigate } from "react-router-dom";
 import { firebaseAddPollInCollection } from "../firebase/functions";
+import { showToast } from "../helpers";
 
 function Preview(props) {
   const { pollInfo, question } = props;
@@ -69,21 +70,21 @@ function Modifications(props) {
 
   const handleSavePoll = async () => {
     dispatch(updateLoading(true));
-    firebaseAddPollInCollection({
-      question,
-      pollInfo,
-      userId: userDetails.userId,
-      users: [],
-    })
-      .then((res) => {
-        console.log("poll save res: ", res);
-        dispatch(updateLoading(false));
-        navigate("/dashboard");
-      })
-      .catch((err) => {
-        console.log("poll save error: ", err);
-        dispatch(updateLoading(false));
+    try {
+      await firebaseAddPollInCollection({
+        question,
+        pollInfo,
+        userId: userDetails.userId,
+        users: [],
       });
+
+      navigate("/dashboard");
+    } catch (error) {
+      console.log("poll save error: ", error);
+      showToast(error.errMessage, "error");
+    } finally {
+      dispatch(updateLoading(false));
+    }
   };
 
   return (

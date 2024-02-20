@@ -30,27 +30,29 @@ function Login(props) {
   const handleSignin = async (e) => {
     e.preventDefault();
     dispatch(updateLoading(true));
-    firebaseSignIn(firebaseAuth, data.email, data.password)
-      .then((res) => {
-        const userDetails = {
-          authToken: res.accessToken,
-          userId: res.uid,
-          refreshToken: res.refreshToken,
-        };
-
-        dispatch(updateUser(userDetails));
-        updateLocalStorage(userDetails);
-
-        dispatch(updateLoading(false));
-        showToast("Registered successfully.");
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log("error: ", err);
-        dispatch(updateLoading(false));
-        showToast(err.errorMessage, "error");
-      });
+  
+    try {
+      const res = await firebaseSignIn(firebaseAuth, data.email, data.password);
+      const userDetails = {
+        authToken: res.accessToken,
+        userId: res.uid,
+        refreshToken: res.refreshToken,
+        email: res.email,
+      };
+  
+      dispatch(updateUser(userDetails));
+      updateLocalStorage(userDetails);
+  
+      showToast("Sign in successfully.");
+      navigate("/");
+    } catch (err) {
+      console.log("error: ", err);
+      showToast(err.errorMessage, "error");
+    } finally {
+      dispatch(updateLoading(false));
+    }
   };
+  
 
   return loading ? (
     <Loader />

@@ -5,6 +5,7 @@ const initialState = {
   userId: "",
   authToken: "",
   refreshToken: "",
+  email: "",
 };
 
 const userSlice = createSlice({
@@ -13,10 +14,11 @@ const userSlice = createSlice({
   reducers: {
     updateUser: (state, action) => {
       console.log("action: ", action);
-      const { userId, authToken, refreshToken } = action.payload;
+      const { userId, authToken, refreshToken, email } = action.payload;
       state.userId = userId;
       state.authToken = authToken;
       state.refreshToken = refreshToken;
+      state.email = email;
     },
   },
 });

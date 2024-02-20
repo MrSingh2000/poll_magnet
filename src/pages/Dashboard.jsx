@@ -3,13 +3,15 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { pollsCollection } from '../firebase/collections';
 import { useDispatch, useSelector } from 'react-redux';
 import BarGraph from '../components/BarGraph';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
 import { updateLoading } from '../redux/features/loaderSlice';
-import { showToast } from '../helpers';
+import { clearLocalStorage, showToast } from '../helpers';
 import PieChart from '../components/PieChart';
 import { MdDeleteOutline } from "react-icons/md";
 import { firebaseDeletePoll } from '../firebase/functions';
+import { IoLogOutOutline } from "react-icons/io5";
+import { updateUser } from '../redux/features/userSlice';
 
 function AllPolls({ polls }) {
     const userDetails = useSelector((store) => store.user);
@@ -107,8 +109,11 @@ function Statistics({ polls }) {
 
     return (
         <div className='py-3'>
-            <p className='text-xl p-2'><span className='font-bold'>Total Voters: </span>{pollStats.totalVotes}</p>
-            <PieChart pollStats={pollStats} />
+            <div className='text-xl p-2'>
+                <p><span className='font-bold'>Total Votes: </span>{pollStats.totalVotes}</p>
+                <p><span className='font-bold'>Total Polls: </span>{polls.length}</p>
+            </div>
+            {pollStats.totalVotes > 0 && <PieChart pollStats={pollStats} />}
         </div>
     )
 }
@@ -117,6 +122,7 @@ function Dashboard() {
     const userDetails = useSelector((store) => store.user);
     const loading = useSelector((store) => store.loading.value);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const q = useMemo(() => query(pollsCollection, where('userId', '==', userDetails.userId)), [userDetails.userId]);
 
@@ -148,15 +154,31 @@ function Dashboard() {
 
     }, [q])
 
+    const handleLogOut = () => {
+        clearLocalStorage();
+        dispatch(updateUser({
+            userId: "",
+            authToken: "",
+            refreshToken: "",
+            email: "",
+        }))
+        navigate('/');
+    }
+
     return loading ? <Loader /> : (
         <div className='container w-full m-auto'>
             <div className='container flex justify-between p-2 py-4'>
                 <div>
-                    <p className='font-semibold text-2xl'>
-                        Dashboard
+                    <p className='font-semibold text-2xl flex items-center gap-3'>
+                        <span>
+                            Dashboard
+                        </span>
+                        <span>
+                            <IoLogOutOutline onClick={handleLogOut} className='cursor-pointer ' />
+                        </span>
                     </p>
                     <p>
-                        demomail@gmail.com
+                        {userDetails.email}
                     </p>
                 </div>
 

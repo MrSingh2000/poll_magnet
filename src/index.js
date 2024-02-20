@@ -24,16 +24,16 @@ const router = createBrowserRouter([
       },
       {
         path: "polls",
-        element: <Polls/>,
+        element: <Polls />,
       },
       {
         path: "dashboard",
         element: <Dashboard />,
       },
       {
-        path: 'createPoll',
-        element: <CreatePolls />
-      }
+        path: "createPoll",
+        element: <CreatePolls />,
+      },
     ],
   },
   {

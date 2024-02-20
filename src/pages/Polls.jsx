@@ -55,18 +55,23 @@ function Polls() {
     return loading ? <Loader /> : (
         <div className="container w-full m-auto p-2 grid grid-cols-1 md:grid-cols-2 gap-4">
             {allPolls.map((item, index) => {
+                const voted = isAlreadyVoted(item, userDetails.userId);
+
                 return (
                     <>
                         <div
                             key={index}
                             className="container bg-[#f5f5f5b0] rounded-xl grow p-5 h-fit w-full overflow-y-hidden"
                         >
-                            <p className="font-semibold text-2xl py-3 ">
+                            <p className="font-semibold text-2xl py-3">
                                 {item.data.question}?
+                                {voted && (<span className="px-3 pb-1 text-xs rounded-full text-green-600 bg-green-200 relative bottom-4 left-2">
+                                    Voted
+                                </span>)}
                             </p>
-                            {isAlreadyVoted(item, userDetails.userId) && (<BarGraph pollInfo={item.data.pollInfo} />)}
+                            {voted && (<BarGraph pollInfo={item.data.pollInfo} />)}
 
-                            {!isAlreadyVoted(item, userDetails.userId) ? (<div>
+                            {!voted ? (<div>
                                 <form>
                                     <ul className="option-list">
                                         {
@@ -81,7 +86,7 @@ function Polls() {
                                                                 e.stopPropagation(); // Stop event propagation
                                                                 handleVoting(index, item.id);
                                                             }}>{pollItem.data[0].name}</label>
-                                                            <div class="check"></div>
+                                                            <div className="check"></div>
                                                         </li>
                                                     </>
                                                 )

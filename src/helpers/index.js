@@ -66,6 +66,7 @@ export const showToast = (message, type = "success") => {
 
     case "error":
       toast.error(message);
+      console.log('shown')
       break;
 
     default:
