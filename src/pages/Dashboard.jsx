@@ -12,6 +12,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { firebaseDeletePoll } from '../firebase/functions';
 import { IoLogOutOutline } from "react-icons/io5";
 import { updateUser } from '../redux/features/userSlice';
+import AuthenticateRoute from '../components/AuthenticateRoute';
 
 function AllPolls({ polls }) {
     const userDetails = useSelector((store) => store.user);
@@ -31,23 +32,26 @@ function AllPolls({ polls }) {
 
     return (
         <>
-            <div className='container w-full m-auto p-2 grid grid-cols-1 md:grid-cols-2 gap-4'>
-                {
-                    polls.map((item, index) => {
-                        return (
-                            <>
-                                <div key={index} className='container bg-indigo-100 rounded-xl grow p-5 h-[85vh] w-full overflow-y-hidden'>
-                                    <div className='flex justify-between items-center mb-2'>
-                                        <p className='font-semibold text-2xl py-3 '>{item.data.question}?</p>
-                                        <MdDeleteOutline className='cursor-pointer bg-white rounded-full p-3 text-red-500 hover:text-white hover:bg-red-500 transition-all duration-500 delay-0' size={50} onClick={() => handleDeletePoll(item.id)} />
+            <AuthenticateRoute>
+                <div className='container w-full m-auto p-2 grid grid-cols-1 md:grid-cols-2 gap-4'>
+                    {
+                        polls.map((item, index) => {
+                            return (
+                                <>
+                                    <div key={index} className='container bg-indigo-100 rounded-xl grow p-5 h-[85vh] w-full overflow-y-hidden'>
+                                        <div className='flex justify-between items-center mb-2'>
+                                            <p className='font-semibold text-2xl py-3 '>{item.data.question}?</p>
+                                            <MdDeleteOutline className='cursor-pointer bg-white rounded-full p-3 text-red-500 hover:text-white hover:bg-red-500 transition-all duration-500 delay-0' size={50} onClick={() => handleDeletePoll(item.id)} />
+                                        </div>
+                                        <BarGraph pollInfo={item.data.pollInfo} />
                                     </div>
-                                    <BarGraph pollInfo={item.data.pollInfo} />
-                                </div>
-                            </>
-                        )
-                    })
-                }
-            </div>
+                                </>
+                            )
+                        })
+                    }
+                </div>
+            </AuthenticateRoute>
+
         </>
     )
 }
