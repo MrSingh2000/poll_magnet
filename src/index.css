@@ -48,7 +48,7 @@ code {
 }
 
 .option-list li:hover label{
-	color: #FFFFFF;
+	color: #5353f2;
 }
 
 .option-list li .check{
@@ -65,7 +65,7 @@ code {
 }
 
 .option-list li:hover .check {
-  border: 5px solid #FFFFFF;
+  border: 5px solid #5353f2;
 }
 
 .option-list li .check::before {

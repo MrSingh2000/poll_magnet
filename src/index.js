@@ -12,6 +12,7 @@ import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import Dashboard from "./pages/Dashboard";
 import CreatePolls from "./pages/CreatePolls";
+import SharePoll from "./pages/SharePoll";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "createPoll",
         element: <CreatePolls />,
+      },
+      {
+        path: "poll/:id",
+        element: <SharePoll />,
       },
     ],
   },

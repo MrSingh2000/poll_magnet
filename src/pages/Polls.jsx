@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { isAlreadyVoted, showToast } from "../helpers";
 import Loader from "../components/Loader";
 import { updateLoading } from "../redux/features/loaderSlice";
+import { FaRegCopy } from "react-icons/fa";
 
 function Polls() {
     const [allPolls, setAllPolls] = useState([]);
@@ -38,6 +39,10 @@ function Polls() {
     }, []);
 
     const handleVoting = (optionIndex, pollId) => {
+        if (!userDetails.email) {
+            showToast("Please login to vote.", "error");
+            return;
+        }
         dispatch(updateLoading(true));
         firebaseUpdatePoll(optionIndex, pollId, userDetails.userId)
             .then((res) => {
@@ -52,6 +57,21 @@ function Polls() {
             })
     }
 
+    const handleShareButton = (pollId) => {
+        console.log(process.env.REACT_APP_FRONT_HOST)
+        const url = `${process.env.REACT_APP_FRONT_HOST}/poll/${pollId}`;
+        navigator.clipboard.writeText(url)
+            .then(() => {
+                // Optionally, show a success message
+                showToast('Text copied to clipboard!');
+            })
+            .catch((error) => {
+                console.error('Error copying text to clipboard:', error);
+                // Optionally, show an error message
+                showToast('Error copying text to clipboard.', 'error');
+            });
+    }
+
     return loading ? <Loader /> : (
         <div className="container w-full m-auto p-2 grid grid-cols-1 md:grid-cols-2 gap-4">
             {allPolls.map((item, index) => {
@@ -63,12 +83,15 @@ function Polls() {
                             key={index}
                             className="container bg-[#f5f5f5b0] rounded-xl grow p-5 h-fit w-full overflow-y-hidden"
                         >
-                            <p className="font-semibold text-2xl py-3">
-                                {item.data.question}?
-                                {voted && (<span className="px-3 pb-1 text-xs rounded-full text-green-600 bg-green-200 relative bottom-4 left-2">
-                                    Voted
-                                </span>)}
-                            </p>
+                            <div className="flex justify-between">
+                                <p className="font-semibold text-2xl py-3">
+                                    {item.data.question}?
+                                    {voted && (<span className="px-3 pb-1 text-xs rounded-full text-green-600 bg-green-200 relative bottom-4 left-2">
+                                        Voted
+                                    </span>)}
+                                </p>
+                                <FaRegCopy className='cursor-pointer bg-white rounded-full p-3 text-green-500 hover:text-white hover:bg-green-500 transition-all duration-500 delay-0' size={50} onClick={() => handleShareButton(item.id)} />
+                            </div>
                             {voted && (<BarGraph pollInfo={item.data.pollInfo} />)}
 
                             {!voted ? (<div>
