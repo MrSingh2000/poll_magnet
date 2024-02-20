@@ -1,26 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { fetchFromLocalStorage } from "../helpers";
 import { useNavigate } from "react-router-dom";
 
 function AuthenticateRoute({ children }) {
   const userDetails = useSelector((store) => store.user);
-
-  const localStorageUser = fetchFromLocalStorage();
   const navigate = useNavigate();
 
-  console.log('here 1');
-  console.log(userDetails, '\n', localStorageUser)
+  useEffect(() => {
+    if (!userDetails?.email) {
+      navigate("/login");
+    }
+  }, [userDetails, navigate]);
 
-  if (!userDetails?.email) {
-    console.log(userDetails, '\n', localStorageUser)
-    console.log("here 2");
-    navigate("/login");
-    return;
-  } else {
-    console.log("here 3");
-    return <>{children}</>;
-  }
+  // Render children only if user is authenticated
+  return userDetails?.email ? <>{children}</> : null;
 }
 
 export default AuthenticateRoute;
