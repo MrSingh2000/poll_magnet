@@ -15,6 +15,7 @@ import SharePoll from "./pages/SharePoll";
 import VerifyEmail from "./pages/VerifyEmail";
 import Signup from "./pages/auth/Signup";
 import Login from "./pages/auth/Login";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
         <Route path="/verify" element={<VerifyEmail />} />
-        <Route path="*" element={<VerifyEmail />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </>
   );

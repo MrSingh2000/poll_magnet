@@ -63,7 +63,7 @@ function Polls() {
         navigator.clipboard.writeText(url)
             .then(() => {
                 // Optionally, show a success message
-                showToast('Text copied to clipboard!');
+                showToast('Poll copied to clipboard!');
             })
             .catch((error) => {
                 console.error('Error copying text to clipboard:', error);
