@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 function Navbar({ firebaseApp, mainAuth, regUI }) {
   const user = useSelector((store) => store.user);
@@ -34,12 +34,6 @@ function Navbar({ firebaseApp, mainAuth, regUI }) {
             <Link to={"/polls"} className="mr-5 hover:text-gray-900">
               Polls
             </Link>
-            <Link to={"/"} className="mr-5 hover:text-gray-900">
-              Third Link
-            </Link>
-            <Link to={"/"} className="mr-5 hover:text-gray-900">
-              Fourth Link
-            </Link>
           </nav>
           <Link to={user.userId ? "/dashboard" : "/login"}>
             <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
@@ -59,6 +53,7 @@ function Navbar({ firebaseApp, mainAuth, regUI }) {
           </Link>
         </div>
       </header>
+      {<Outlet />}
     </>
   );
 }

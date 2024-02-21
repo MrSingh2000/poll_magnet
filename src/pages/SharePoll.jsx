@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { updateLoading } from '../redux/features/loaderSlice';
-import { pollsCollection } from '../firebase/collections';
 import { fireStoredb } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { firebaseUpdatePoll } from '../firebase/functions';

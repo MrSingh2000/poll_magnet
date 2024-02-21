@@ -5,57 +5,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home";
-import Polls from "./pages/Polls";
-import Login from "./pages/auth/Login";
-import Signup from "./pages/auth/Signup";
-import Dashboard from "./pages/Dashboard";
-import CreatePolls from "./pages/CreatePolls";
-import SharePoll from "./pages/SharePoll";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    children: [
-      {
-        path: "",
-        element: <Home />,
-      },
-      {
-        path: "polls",
-        element: <Polls />,
-      },
-      {
-        path: "dashboard",
-        element: <Dashboard />,
-      },
-      {
-        path: "createPoll",
-        element: <CreatePolls />,
-      },
-      {
-        path: "poll/:id",
-        element: <SharePoll />,
-      },
-    ],
-  },
-  {
-    path: "login",
-    element: <Login />,
-  },
-  {
-    path: "register",
-    element: <Signup />,
-  },
-]);
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

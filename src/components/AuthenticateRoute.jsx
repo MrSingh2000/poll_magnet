@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { fetchFromLocalStorage } from "../helpers";
 import { useNavigate } from "react-router-dom";
 
 function AuthenticateRoute({ children }) {

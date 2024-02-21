@@ -1,4 +1,4 @@
-import { getDocs, onSnapshot, query, where } from 'firebase/firestore';
+import { onSnapshot, query, where } from 'firebase/firestore';
 import React, { useEffect, useMemo, useState } from 'react';
 import { pollsCollection } from '../firebase/collections';
 import { useDispatch, useSelector } from 'react-redux';

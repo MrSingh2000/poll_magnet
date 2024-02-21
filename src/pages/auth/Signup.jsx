@@ -8,6 +8,7 @@ import { updateUser } from "../../redux/features/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { firebaseAddUserInCollection } from "../../firebase/functions";
 import { firebaseAuth } from "../../firebase";
+import { sendEmailVerification } from "firebase/auth";
 
 function Signup(props) {
   const navigate = useNavigate();
@@ -34,23 +35,22 @@ function Signup(props) {
   
     try {
       const res = await firebaseSignUp(firebaseAuth, data.email, data.password);
-      const userDetails = {
-        authToken: res.accessToken,
-        userId: res.uid,
-        refreshToken: res.refreshToken,
-        email: res.email,
-      };
+      
+      // sending verfication mail
+      try {
+        await sendEmailVerification(firebaseAuth.currentUser);
+        
+      } catch (error) {
+          console.log("error in sending verification mail: ", error);
+      }
   
-      dispatch(updateUser(userDetails));
-      updateLocalStorage(userDetails);
-  
-      await firebaseAddUserInCollection({
+      firebaseAddUserInCollection({
         email: res.email,
         uid: res.uid,
       });
   
       showToast("Registered successfully.");
-      navigate("/");
+      navigate("/verify");
     } catch (err) {
       console.log("error: ", err);
       showToast(err.errorMessage, "error");

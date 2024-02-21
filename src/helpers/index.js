@@ -11,6 +11,8 @@ export const firebaseSignIn = (auth, email, password) => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        const isUserVerified = user.emailVerified;
+        if (!isUserVerified) reject({errorMessage:"Please Verify your account first."});
         console.log("User credential: ", userCredential);
         console.log("user: ", user);
         resolve(user);
@@ -66,7 +68,7 @@ export const showToast = (message, type = "success") => {
 
     case "error":
       toast.error(message);
-      console.log('shown')
+      console.log("shown");
       break;
 
     default:

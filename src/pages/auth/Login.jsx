@@ -30,29 +30,28 @@ function Login(props) {
   const handleSignin = async (e) => {
     e.preventDefault();
     dispatch(updateLoading(true));
-  
+
     try {
       const res = await firebaseSignIn(firebaseAuth, data.email, data.password);
+      console.log("res: ", res);
       const userDetails = {
         authToken: res.accessToken,
         userId: res.uid,
         refreshToken: res.refreshToken,
         email: res.email,
       };
-  
+
       dispatch(updateUser(userDetails));
       updateLocalStorage(userDetails);
-  
+      dispatch(updateLoading(false));
       showToast("Sign in successfully.");
       navigate("/");
     } catch (err) {
       console.log("error: ", err);
       showToast(err.errorMessage, "error");
-    } finally {
       dispatch(updateLoading(false));
     }
   };
-  
 
   return loading ? (
     <Loader />
@@ -70,7 +69,7 @@ function Login(props) {
         pauseOnHover
         theme="colored"
       />
-      <div className="flex w-full justify-center items-center overflow-hidden">
+      <div className="-z-10 flex w-full justify-center items-center overflow-hidden">
         <div className="flex flex-col justify-center flex-1 px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24 my-4 shadow-xl rounded-lg">
           <div className="w-full max-w-xl mx-auto lg:w-96">
             <div>
