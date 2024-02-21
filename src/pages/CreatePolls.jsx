@@ -79,103 +79,101 @@ function Modifications(props) {
         users: [],
       });
 
-      navigate("/dashboard");
+      navigate("/dashboard", { replace: true }).then(() => {
+        dispatch(updateLoading(false));
+      });
     } catch (error) {
       console.log("poll save error: ", error);
       showToast(error.errMessage, "error");
-    } finally {
       dispatch(updateLoading(false));
     }
   };
 
   return (
-    <AuthenticateRoute>
-      <div className=" grow p-5 overflow-y-auto h-[85vh]">
-        <div className="bg-gray-100 rounded-xl p-3">
-          <p className="text-xl font-semibold my-2">Content</p>
-          <p>
-            <span className="font-semibold">Type:</span> Multiple Choice
-            Question
-          </p>
-        </div>
-        <div className="p-3">
-          <div>
-            <p className="font-semibold mb-1">Question</p>
-            <input
-              onChange={(e) => setQuestion(e.target.value)}
-              type="text"
-              id="rounded-email"
-              className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-              placeholder="What is your age"
-              value={question || ""}
-            />
-          </div>
-          <hr className="bg-gray-100 my-3" />
-          <div>
-            <p className="font-semibold mb-1">Options</p>
-            <div>
-              <div className="flex flex-col gap-2">
-                {pollInfo.map((item, index) => {
-                  return (
-                    <div className="flex relative flex-row-reverse" key={index}>
-                      <span
-                        onClick={() => deleteOption(index)}
-                        className=" cursor-pointer rounded-r-md inline-flex  items-center px-3 border-t bg-white border-r border-b  border-gray-300 text-gray-500 shadow-sm text-sm"
-                      >
-                        <MdOutlineCancel />
-                      </span>
-                      <input
-                        onChange={(e) => handleOptionValueChange(e, index)}
-                        type="text"
-                        id="rounded-email"
-                        className="rounded-l-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        value={item.data[0].name}
-                        name={item.label}
-                        placeholder={item.label}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-
-              <button
-                onClick={addOption}
-                type="button"
-                className="py-2 px-4  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-pink-200 text-white w-fit transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full my-3"
-              >
-                Add Option
-              </button>
-            </div>
-          </div>
-          <hr className="bg-gray-100 my-3" />
-          <div>
-            <p className="font-semibold mb-3">Image</p>
-            <label
-              htmlFor="file-upload"
-              className="p-3 relative cursor-pointer bg-white rounded-md font-medium border border-gray-300 hover:border-gray-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-purple-500"
-            >
-              <span className="inline-block py-2 px-4 rounded-md text-sm leading-5 font-medium text-gray-700">
-                Choose a file
-              </span>
-              <input
-                id="file-upload"
-                name="file-upload"
-                type="file"
-                className="sr-only"
-              />
-            </label>
-          </div>
-
-          <button
-            onClick={handleSavePoll}
-            type="button"
-            className="py-2 px-4 mt-6 bg-pink-600 hover:bg-pink-700 focus:ring-pink-500 focus:ring-offset-pink-200 text-white w-fit transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full"
-          >
-            Save
-          </button>
-        </div>
+    <div className=" grow p-5 overflow-y-auto h-[85vh]">
+      <div className="bg-gray-100 rounded-xl p-3">
+        <p className="text-xl font-semibold my-2">Content</p>
+        <p>
+          <span className="font-semibold">Type:</span> Multiple Choice Question
+        </p>
       </div>
-    </AuthenticateRoute>
+      <div className="p-3">
+        <div>
+          <p className="font-semibold mb-1">Question</p>
+          <input
+            onChange={(e) => setQuestion(e.target.value)}
+            type="text"
+            id="rounded-email"
+            className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+            placeholder="What is your age"
+            value={question || ""}
+          />
+        </div>
+        <hr className="bg-gray-100 my-3" />
+        <div>
+          <p className="font-semibold mb-1">Options</p>
+          <div>
+            <div className="flex flex-col gap-2">
+              {pollInfo.map((item, index) => {
+                return (
+                  <div className="flex relative flex-row-reverse" key={index}>
+                    <span
+                      onClick={() => deleteOption(index)}
+                      className=" cursor-pointer rounded-r-md inline-flex  items-center px-3 border-t bg-white border-r border-b  border-gray-300 text-gray-500 shadow-sm text-sm"
+                    >
+                      <MdOutlineCancel />
+                    </span>
+                    <input
+                      onChange={(e) => handleOptionValueChange(e, index)}
+                      type="text"
+                      id="rounded-email"
+                      className="rounded-l-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                      value={item.data[0].name}
+                      name={item.label}
+                      placeholder={item.label}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+
+            <button
+              onClick={addOption}
+              type="button"
+              className="py-2 px-4  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-pink-200 text-white w-fit transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full my-3"
+            >
+              Add Option
+            </button>
+          </div>
+        </div>
+        <hr className="bg-gray-100 my-3" />
+        <div>
+          <p className="font-semibold mb-3">Image</p>
+          <label
+            htmlFor="file-upload"
+            className="p-3 relative cursor-pointer bg-white rounded-md font-medium border border-gray-300 hover:border-gray-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-purple-500"
+          >
+            <span className="inline-block py-2 px-4 rounded-md text-sm leading-5 font-medium text-gray-700">
+              Choose a file
+            </span>
+            <input
+              id="file-upload"
+              name="file-upload"
+              type="file"
+              className="sr-only"
+            />
+          </label>
+        </div>
+
+        <button
+          onClick={handleSavePoll}
+          type="button"
+          className="py-2 px-4 mt-6 bg-pink-600 hover:bg-pink-700 focus:ring-pink-500 focus:ring-offset-pink-200 text-white w-fit transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full"
+        >
+          Save
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -209,15 +207,17 @@ function CreatePolls() {
   return loading ? (
     <Loader />
   ) : (
-    <div className="container m-auto flex w-full">
-      <Preview pollInfo={pollInfo} question={question} />
-      <Modifications
-        pollInfo={pollInfo}
-        setPollInfo={setPollInfo}
-        question={question}
-        setQuestion={setQuestion}
-      />
-    </div>
+    <AuthenticateRoute>
+      <div className="container m-auto flex w-full">
+        <Preview pollInfo={pollInfo} question={question} />
+        <Modifications
+          pollInfo={pollInfo}
+          setPollInfo={setPollInfo}
+          question={question}
+          setQuestion={setQuestion}
+        />
+      </div>{" "}
+    </AuthenticateRoute>
   );
 }
 
