@@ -81,9 +81,9 @@ function Signup(props) {
           <div className="flex flex-col justify-center flex-1 px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24 my-4 shadow-xl rounded-lg">
             <div className="w-full max-w-xl mx-auto lg:w-96">
               <div>
-                <a className="text-blue-600 text-medium" href="/groups/login/">
+                <Link to={'/'} className="text-blue-600 text-medium">
                   Poll Magnet
-                </a>
+                </Link>
                 <h2 className="mt-6 text-3xl font-extrabold text-neutral-600">
                   Sign up.
                 </h2>

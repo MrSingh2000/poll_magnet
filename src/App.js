@@ -16,6 +16,7 @@ import VerifyEmail from "./pages/VerifyEmail";
 import Signup from "./pages/auth/Signup";
 import Login from "./pages/auth/Login";
 import ErrorPage from "./pages/ErrorPage";
+import Resetpass from "./pages/Resetpass";
 
 function App() {
   const dispatch = useDispatch();
@@ -50,6 +51,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
         <Route path="/verify" element={<VerifyEmail />} />
+        <Route path="/resetpass" element={<Resetpass />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </>

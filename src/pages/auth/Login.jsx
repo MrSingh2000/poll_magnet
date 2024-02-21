@@ -29,6 +29,7 @@ function Login(props) {
 
   const handleSignin = async (e) => {
     e.preventDefault();
+    if (!data.email || !data.password) return;
     dispatch(updateLoading(true));
 
     try {
@@ -73,9 +74,9 @@ function Login(props) {
         <div className="flex flex-col justify-center flex-1 px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24 my-4 shadow-xl rounded-lg">
           <div className="w-full max-w-xl mx-auto lg:w-96">
             <div>
-              <a className="text-blue-600 text-medium" href="/groups/login/">
+              <Link to={'/'} className="text-blue-600 text-medium" >
                 Poll Magnet
-              </a>
+              </Link>
               <h2 className="mt-6 text-3xl font-extrabold text-neutral-600">
                 Sign in.
               </h2>
@@ -132,10 +133,13 @@ function Login(props) {
                     <button
                       onClick={(e) => handleSignin(e)}
                       type="submit"
-                      className="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      className={`flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform ${!data.email || !data.password ? 'bg-blue-300' :'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'} rounded-xl`}
                     >
                       Sign in
                     </button>
+                    <Link to={'/resetpass'}>
+                    <p className="text-center text-xs my-3 italic text-blue-500 underline cursor-pointer">Forgot password?</p>
+                    </Link>
                   </div>
                 </form>
                 <div className="relative my-4">
