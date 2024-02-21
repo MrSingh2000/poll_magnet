@@ -58,8 +58,7 @@ function Polls() {
   };
 
   const handleShareButton = (pollId) => {
-    console.log(process.env.REACT_APP_FRONT_HOST);
-    const url = `${process.env.REACT_APP_FRONT_HOST}/poll/${pollId}`;
+    const url = `${window.location.origin}/poll/${pollId}`;
     navigator.clipboard
       .writeText(url)
       .then(() => {
